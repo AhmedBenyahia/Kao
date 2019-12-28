@@ -1,8 +1,8 @@
 
-//make all migration : python3 manage.py makemigrations
-//make all settings migrations : python3 manage.py migrate
+//make all migration => python3 manage.py makemigrations
+//make all settings migrations => python3 manage.py migrate
 //Run server=>python3 manage.py run server
-// Create super user for admin managing in http://127.0.0.1:8000/admin/ 
+// Create super user for admin managing in http://127.0.0.1:8000/admin/ => python manage.py createsuperuser
 
 URL REGISTRATION ACCOUNT (http://127.0.0.1:8000/api/accounts/register);
 URL LOGIN WITH TOKEN AUTHENTICATION (http://127.0.0.1:8000/api/accounts/login);
