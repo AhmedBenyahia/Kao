@@ -29,8 +29,10 @@ python3 manage.py runserver && \
 # APIs URLs
 URL REGISTRATION ACCOUNT (http://127.0.0.1:8000/api/accounts/register);
 URL LOGIN WITH TOKEN AUTHENTICATION (http://127.0.0.1:8000/api/accounts/login);
+// TODO: URL LOGIN WITH FACE RECOGNITION ()
 URL LOGOUT WITH DELETE AUTH TOKEN (http://127.0.0.1:8000/api/accounts/logout);
 URL GET AUTH USER (http://127.0.0.1:8000/api/accounts/auth);
+URL UPLOAD FILES (http://127.0.0.1:8000/api/accounts/upload);
 URL ALL MEMOS OF AUTH USER (http://127.0.0.1:8000/api/memos/all);
 URL GET SPECIAL MEMO (http://127.0.0.1:8000/api/memos/{dynamique_id});
 URL UPDATE SPECIAL MEMO (http://127.0.0.1:8000/api/memos/{dynamique_id}/update);
