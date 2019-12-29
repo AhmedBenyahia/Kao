@@ -15,5 +15,3 @@ URL DELETE SPECIAL MEMO (http://127.0.0.1:8000/api/memos/{dynamique_id}/delete);
 URL CREATE NEW MEMO (http://127.0.0.1:8000/api/memos/create);
 
 
-
-

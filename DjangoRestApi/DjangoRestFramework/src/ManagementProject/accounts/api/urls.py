@@ -1,9 +1,10 @@
 from django.urls import path
 from accounts.api.views import(
-        CustomObtainAuthToken,
-        Logout,
         registration_view,
+        CustomObtainAuthToken,
         api_get_auth_user_view,
+        Logout,
+
 
 )
 
