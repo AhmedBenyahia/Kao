@@ -1,9 +1,32 @@
 
-//make all migration => python3 manage.py makemigrations
+# Create new python environment
+## In The project root dir
+sudo apt-get update && \
+sudo apt-get install -y python-virtualenv && \
+mkdir env && virtualenv -p /usr/bin/python3 env/djangoApi && \
+source env/djangoApi/bin/activate && \
+pip3 install -r requirements.txt
+
+#Run the server 
+python3 manage.py makemigrations && \  
+python3 manage.py migrate && \
+python manage.py createsuperuser && \
+python3 manage.py runserver && \
+
+
+
+
+
+
+# Description 
+
+//make all migration => python3 manage.py makemigrations 
 //make all settings migrations => python3 manage.py migrate
 //Run server=>python3 manage.py run server
 // Create super user for admin managing in http://127.0.0.1:8000/admin/ => python manage.py createsuperuser
 
+
+# APIs URLs
 URL REGISTRATION ACCOUNT (http://127.0.0.1:8000/api/accounts/register);
 URL LOGIN WITH TOKEN AUTHENTICATION (http://127.0.0.1:8000/api/accounts/login);
 URL LOGOUT WITH DELETE AUTH TOKEN (http://127.0.0.1:8000/api/accounts/logout);
