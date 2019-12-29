@@ -4,6 +4,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include <sys/stat.h>
+#include <sys/types.h>
+#include <unistd.h>
 
     //////////////////////////////////////////////////////////BUTTONS AND LAYOUT VARIABLES//////////////////////////////////////////////////////
     GtkWidget *Pin,*Name,*Connect,*Signup,*Exit;                                                            //Login Variables
@@ -166,10 +168,10 @@
 
             if(strcmp(gtk_entry_get_text(GTK_ENTRY(SName)),"\0")==0 || (strcmp(gtk_entry_get_text(GTK_ENTRY(SPin)),"\0")==0) || (strcmp(gtk_entry_get_text(GTK_ENTRY(SRPin)),"\0")==0) )  //if the formilar isnt fully filled condition 
                 gtk_widget_show(Warning); 
-            
+                
             else if(strcmp(gtk_entry_get_text(GTK_ENTRY(SPin)),gtk_entry_get_text(GTK_ENTRY(SRPin)))!=0)            //if pin are similar condition
                 gtk_widget_show(SamePin);
-            
+
             else if (strlen(strcpy(x,(gtk_entry_get_text(GTK_ENTRY(SPin)))))!=4)                                    //if pin's length isnt 4 
                 gtk_widget_show(LengthError);
             
@@ -198,7 +200,7 @@
                             i++;
                             j++;
                             }
-                            for (int k=0;k<j;k++){                                                                  
+                            for (int k=0;k<j;k++) {                                                                  
                                 strncpy(word,message[k],strlen(message[k])-1);
                                 if(strcmp(gtk_entry_get_text(GTK_ENTRY(SName)),word)==0){                            //compara the entred data with all users in file
                                     test=true;
@@ -211,11 +213,13 @@
                             else{
                                 fclose(fp);                                                                         //else close file and open it as write privilege
                                 fp=fopen("src/Data.txt","ab"); 
+                                g_print("Accounnt created");
                                 fputs(gtk_entry_get_text(GTK_ENTRY(SName)),fp);
                                 fputs("\n",fp);
                                 fputs(gtk_entry_get_text(GTK_ENTRY(SPin)),fp);
                                 fputs("\n",fp);
                                 gtk_widget_show(AccountCreated);
+                                g_print("Accounnt created");
                                 }
                             fclose(fp);                                                                             //close it again
                         }
@@ -305,7 +309,7 @@
             }
 
         }
-
+        
         //////////////////////////////////////////////////////////////////////////////////////
         ///                                  POP UP EXIT                                    //
         //////////////////////////////////////////////////////////////////////////////////////    

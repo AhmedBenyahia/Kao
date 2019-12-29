@@ -1,0 +1,3 @@
+cd GTK
+make
+./Login-Plateforme
