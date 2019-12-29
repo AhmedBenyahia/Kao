@@ -1,0 +1,3 @@
+/home/sayto/Desktop/Kao/Kao/GTK/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/sayto/Desktop/Kao/Kao/GTK/cmake-build-debug/CMakeFiles/Kao.dir
+/home/sayto/Desktop/Kao/Kao/GTK/cmake-build-debug/CMakeFiles/edit_cache.dir

@@ -1,0 +1,1 @@
+/usr/bin/cc -g   CMakeFiles/GTK.dir/src/crypt.c.o CMakeFiles/GTK.dir/src/main.c.o CMakeFiles/GTK.dir/src/trial.c.o  -o GTK 

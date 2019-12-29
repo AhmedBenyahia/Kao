@@ -1,0 +1,4 @@
+/home/sayto/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/191.6707.62/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/sayto/Desktop/Kao/Kao/GTK
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/sayto/Desktop/Kao/Kao/GTK/cmake-build-debug
