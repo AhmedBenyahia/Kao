@@ -1,0 +1,42 @@
+
+# Create new python environment
+## In The project root dir
+sudo apt-get update && \
+sudo apt-get install -y python-virtualenv && \
+mkdir env && virtualenv -p /usr/bin/python3 env/djangoApi && \
+source env/djangoApi/bin/activate && \
+pip3 install -r requirements.txt
+
+#Run the server 
+python3 manage.py makemigrations && \  
+python3 manage.py migrate && \
+python manage.py createsuperuser && \
+python3 manage.py runserver && \
+
+
+
+
+
+
+# Description 
+
+//make all migration => python3 manage.py makemigrations 
+//make all settings migrations => python3 manage.py migrate
+//Run server=>python3 manage.py run server
+// Create super user for admin managing in http://127.0.0.1:8000/admin/ => python manage.py createsuperuser
+
+
+# APIs URLs
+URL REGISTRATION ACCOUNT (http://127.0.0.1:8000/api/accounts/register);
+URL LOGIN WITH TOKEN AUTHENTICATION (http://127.0.0.1:8000/api/accounts/login);
+// TODO: URL LOGIN WITH FACE RECOGNITION ()
+URL LOGOUT WITH DELETE AUTH TOKEN (http://127.0.0.1:8000/api/accounts/logout);
+URL GET AUTH USER (http://127.0.0.1:8000/api/accounts/auth);
+URL UPLOAD FILES (http://127.0.0.1:8000/api/accounts/upload);
+URL ALL MEMOS OF AUTH USER (http://127.0.0.1:8000/api/memos/all);
+URL GET SPECIAL MEMO (http://127.0.0.1:8000/api/memos/{dynamique_id});
+URL UPDATE SPECIAL MEMO (http://127.0.0.1:8000/api/memos/{dynamique_id}/update);
+URL DELETE SPECIAL MEMO (http://127.0.0.1:8000/api/memos/{dynamique_id}/delete);
+URL CREATE NEW MEMO (http://127.0.0.1:8000/api/memos/create);
+
+

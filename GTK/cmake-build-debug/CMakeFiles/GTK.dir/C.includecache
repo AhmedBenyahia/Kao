@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/sayto/Desktop/Kao/Kao/GTK/src/crypt.c
+stdio.h
+-
+stdlib.h
+-
+
+/home/sayto/Desktop/Kao/Kao/GTK/src/main.c
+gtk/gtk.h
+-
+stdio.h
+-
+stdbool.h
+-
+string.h
+-
+stdlib.h
+-
+sys/stat.h
+-
+
+/home/sayto/Desktop/Kao/Kao/GTK/src/trial.c
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+
