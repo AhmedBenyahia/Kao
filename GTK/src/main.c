@@ -289,9 +289,6 @@
                             }
                             
                             if(strcmp(gtk_entry_get_text(GTK_ENTRY(LEmail)),word)==0 && strcmp(gtk_entry_get_text(GTK_ENTRY(LPassword)),word1)==0) {    //if data corresponds to info in the file
-                               // gtk_window_set_title(GTK_WINDOW(notepad),gtk_entry_get_text(GTK_ENTRY(Name)));                                  //open notepad and name it the name of a user
-                               // gtk_widget_hide(AccountEmpty);
-                               // gtk_widget_show(notepad);
                                   gtk_window_set_title(GTK_WINDOW(Profile),"Welcome");
                                   gtk_widget_show(Profile);
                             }
