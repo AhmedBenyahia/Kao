@@ -13,7 +13,8 @@ from rest_framework.views import APIView
 from accounts.models import Account
 import base64
 from random import random
-
+#import script from recognition_test so make this
+from script import your_id
 
 # login user and return auth token with user data
 class CustomObtainAuthToken(ObtainAuthToken):
@@ -24,14 +25,27 @@ class CustomObtainAuthToken(ObtainAuthToken):
         serializer = UserDetailSerializer(user)
         return Response({'token': token.key, 'user': serializer.data})
 
-# login with face recognition
-@api_view(['GET', ])
+# login with face recognition.py
+@api_view(['POST', ])
 @permission_classes((AllowAny,))
-def api_get_user_view(request,id):
-    user = Account.objects.get(id=id)
-    token, created = Token.objects.get_or_create(user=user)
-    serializer = UserDetailSerializer(user)
-    return Response({'token': token.key, 'user': serializer.data})
+def api_get_user_view(request):
+    # string_image = data['image']
+    # imgdata = base64.b64decode(string_image)
+# call script recognition and enter this image in parameter and return id
+    id=your_id()
+    if id:
+        try:
+            user = Account.objects.get(id=id)
+        except Account.DoesNotExist:
+            user = None
+        if user:
+            token, created = Token.objects.get_or_create(user=user)
+            serializer = UserDetailSerializer(user)
+            return Response({'token': token.key, 'user': serializer.data})
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+    else:
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
 # user logout
 class Logout(APIView):
