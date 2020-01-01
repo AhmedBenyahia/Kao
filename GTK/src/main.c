@@ -8,8 +8,8 @@
 #include <unistd.h>
 
     //////////////////////////////////////////////////////////BUTTONS AND LAYOUT VARIABLES//////////////////////////////////////////////////////
-    GtkWidget *Pin,*Name,*Connect,*Signup,*Exit;                                                            //Login Variables
-    GtkWidget *SName,*SPin,*SRPin,*Creation,*Return;                                                        //Signup Variables
+    GtkWidget *LPassword,*LEmail,*Connect,*Signup,*Exit;                                                            //Login Variables
+    GtkWidget *FName,*LName,*RPassword,*Password,*Email,*Creation,*Return;                                                        //Signup Variables
     GtkWidget *Yes,*No;                                                                                     //PopUp Exit variables
     GtkWidget *OK,*CLOSE;                                                                                   //Waning whole Formula
     GtkWidget *ok,*fermer;                                                                                  //no account popup
@@ -18,7 +18,6 @@
     GtkWidget *OKUSED,*CLOSEUSED ;                                                                          //USER USED
     GtkWidget *PINOK,*PINCLOSE ;                                                                            //Same PIn
     GtkWidget *can,*okey ;
-    GtkWidget *OKLENGTH,*CLOSELENGTH;                                                                       //PinLength
     GtkWidget *YES,*NO;                                                                                     //Exit POPUP            
     GtkWidget *Okay,*Cancel;                                                                                //Wrong password Pop-up
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -26,7 +25,7 @@
     //////////////////////////////////////////////////////////////////Windows///////////////////////////////////////////////////////////////////
     GtkBuilder *builder;                                                                                    //the glade varialble
     GtkWidget  *LoginWindow,*Sign,*Warning,*SamePin;                                                        //The windows Used
-    GtkWidget  *AccountCreated,*AccountError,*AccountEmpty,*UserUsed;                                       //The windows Used
+    GtkWidget  *AccountCreated,*AccountError,*AccountEmpty,*UserUsed,*Profile;                                       //The windows Used
     GtkWidget  *LengthError,*Exit,*notepad;                                                                 //The windows Used
     GtkWidget  *Wrongpassword,*NoAccount;                                                                              //The windows Used
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -38,7 +37,7 @@
     char buffer[80],x[20];                                                                                  //buffr
     char message[100][20];                                                                                  //all the users table
     char messagepass[100][20];                                                                              //all the passwords
-    struct stat st;                                                                                         //struct of a file we used it to see whether a file is empty
+    struct stat st;                                                                                         //struct of a file we used it to see whether a file is empty    
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////// THE FUNCTIONS USED //////////////////////////////////////////////////////
@@ -61,11 +60,13 @@
             builder = gtk_builder_new_from_file("glade/window_main.glade");                                         //link the builder      
             Sign = GTK_WIDGET(gtk_builder_get_object(builder, "Signup"));                                           //Signhe sign wondow    
             
-            SName     = GTK_WIDGET(gtk_builder_get_object(builder,"SName"));                                        //link the glade buttons with c 
-            SPin      = GTK_WIDGET(gtk_builder_get_object(builder,"SPin"));                                         //link the glade buttons with c         
-            SRPin     = GTK_WIDGET(gtk_builder_get_object(builder,"SRPin"));                                        //link the glade buttons with c 
-            Creation  = GTK_WIDGET(gtk_builder_get_object(builder,"Creation"));                                     //link the glade buttons with c 
-            Return    = GTK_WIDGET(gtk_builder_get_object(builder,"Return"));                                       //link the glade buttons with c 
+            FName           = GTK_WIDGET(gtk_builder_get_object(builder,"FName"));
+            LName           = GTK_WIDGET(gtk_builder_get_object(builder,"LName"));                                        //link the glade buttons with c 
+            Password        = GTK_WIDGET(gtk_builder_get_object(builder,"Password"));                                         //link the glade buttons with c         
+            RPassword       = GTK_WIDGET(gtk_builder_get_object(builder,"RPassword"));                                        //link the glade buttons with c 
+            Email           = GTK_WIDGET(gtk_builder_get_object(builder,"Email"));
+            Creation        = GTK_WIDGET(gtk_builder_get_object(builder,"Creation"));                                     //link the glade buttons with c 
+            Return          = GTK_WIDGET(gtk_builder_get_object(builder,"Return"));                                       //link the glade buttons with c 
     
                        
             g_signal_connect(G_OBJECT(Creation),"clicked", G_CALLBACK (verifydataSign), (gpointer)LoginWindow);      //link the button with a function ;
@@ -93,8 +94,8 @@
 
             g_signal_connect(LoginWindow,"destroy", G_CALLBACK(gtk_main_quit), NULL);
             
-            Name            = GTK_WIDGET(gtk_builder_get_object(builder,"Name"));                                       ///////////////////////////////////////////
-            Pin             = GTK_WIDGET(gtk_builder_get_object(builder,"Pin"));
+            LEmail          = GTK_WIDGET(gtk_builder_get_object(builder,"LEmail"));                                       ///////////////////////////////////////////
+            LPassword       = GTK_WIDGET(gtk_builder_get_object(builder,"LPassword"));
             Connect         = GTK_WIDGET(gtk_builder_get_object(builder,"Connect"));
             Signup          = GTK_WIDGET(gtk_builder_get_object(builder,"Signupbtn"));
             Exit            = GTK_WIDGET(gtk_builder_get_object(builder,"Exit"));                                       //link all buttons of the login 
@@ -127,16 +128,12 @@
             SamePin = GTK_WIDGET(gtk_builder_get_object(builder, "SamePinError"));
             AccountCreated = GTK_WIDGET(gtk_builder_get_object(builder, "AccountCreated"));
             UserUsed = GTK_WIDGET(gtk_builder_get_object(builder, "UserUsed"));
-            LengthError= GTK_WIDGET(gtk_builder_get_object(builder, "LENGTHERROR"));
             int i=0,j=0;
-
-
-            OKLENGTH      = GTK_WIDGET(gtk_builder_get_object(builder, "OKLENGTH"));
-            CLOSELENGTH   = GTK_WIDGET(gtk_builder_get_object(builder, "CLOSELENGTH"));                       ///      LINK BUTTONS AND WINDOWS    ////
-
+            
+                       
             OK      = GTK_WIDGET(gtk_builder_get_object(builder, "OK"));
             CLOSE   = GTK_WIDGET(gtk_builder_get_object(builder, "CLOSE"));
-
+                                                                                                        
             OKKK      = GTK_WIDGET(gtk_builder_get_object(builder, "OKKK"));
             CLOSEEE   = GTK_WIDGET(gtk_builder_get_object(builder, "CLOSEEE"));
 
@@ -145,10 +142,7 @@
 
             PINOK     = GTK_WIDGET(gtk_builder_get_object(builder, "PINOK"));
             PINCLOSE   = GTK_WIDGET(gtk_builder_get_object(builder, "PINCLOSE"));
-
-            OKLENGTH     = GTK_WIDGET(gtk_builder_get_object(builder, "OKLENGTH"));
-            CLOSELENGTH   = GTK_WIDGET(gtk_builder_get_object(builder, "CLOSELENGTH"));                         ///////////////////////////////////////
-
+                                                                                                         
 
             g_signal_connect(G_OBJECT(OK),"clicked", G_CALLBACK (Hide),(gpointer) Warning);
             g_signal_connect(G_OBJECT(CLOSE),"clicked", G_CALLBACK (Hide), (gpointer)Warning);
@@ -162,28 +156,23 @@
             g_signal_connect(G_OBJECT(CLOSEUSED),"clicked", G_CALLBACK (Hide),(gpointer) UserUsed);
             g_signal_connect(G_OBJECT(OKUSED),"clicked", G_CALLBACK (Hide), (gpointer)UserUsed);
 
-            g_signal_connect(G_OBJECT(OKLENGTH),"clicked", G_CALLBACK (Hide),(gpointer) LengthError);
-            g_signal_connect(G_OBJECT(CLOSELENGTH),"clicked", G_CALLBACK (Hide), (gpointer)LengthError);           /////////////////////////////
 
-
-            if(strcmp(gtk_entry_get_text(GTK_ENTRY(SName)),"\0")==0 || (strcmp(gtk_entry_get_text(GTK_ENTRY(SPin)),"\0")==0) || (strcmp(gtk_entry_get_text(GTK_ENTRY(SRPin)),"\0")==0) )  //if the formilar isnt fully filled condition 
+            if(strcmp(gtk_entry_get_text(GTK_ENTRY(FName)),"\0")==0 || (strcmp(gtk_entry_get_text(GTK_ENTRY(LName)),"\0")==0) || (strcmp(gtk_entry_get_text(GTK_ENTRY(Email)),"\0")==0) || (strcmp(gtk_entry_get_text(GTK_ENTRY(Password)),"\0")==0)|| (strcmp(gtk_entry_get_text(GTK_ENTRY(RPassword)),"\0")==0) )  //if the formilar isnt fully filled condition 
                 gtk_widget_show(Warning); 
                 
-            else if(strcmp(gtk_entry_get_text(GTK_ENTRY(SPin)),gtk_entry_get_text(GTK_ENTRY(SRPin)))!=0)            //if pin are similar condition
+            else if(strcmp(gtk_entry_get_text(GTK_ENTRY(Password)),gtk_entry_get_text(GTK_ENTRY(RPassword)))!=0)            //if pin are similar condition
                 gtk_widget_show(SamePin);
-
-            else if (strlen(strcpy(x,(gtk_entry_get_text(GTK_ENTRY(SPin)))))!=4)                                    //if pin's length isnt 4 
-                gtk_widget_show(LengthError);
             
             else
-            {       
-                if (stat("src/Data.txt",&st)) {
+            {   
+                fp=fopen("src/Data.txt","ab");                                                              //open file    
+                if (stat("src/Data.txt",&st)==0) {
                     if(st.st_size==0)                                                                               //check file size if 0 fill it with data
                     {   
-                        fp=fopen("src/Data.txt","ab");                                                              //open file
-                        fputs(gtk_entry_get_text(GTK_ENTRY(SName)),fp);                                             
+                        
+                        fputs(gtk_entry_get_text(GTK_ENTRY(Email)),fp);                                             
                         fputs("\n",fp);
-                        fputs(gtk_entry_get_text(GTK_ENTRY(SPin)),fp);
+                        fputs(gtk_entry_get_text(GTK_ENTRY(Password)),fp);
                         fputs("\n",fp);
                         gtk_widget_show(AccountCreated);
                         fclose(fp);                                                                                 //filled with data and closed    
@@ -202,7 +191,7 @@
                             }
                             for (int k=0;k<j;k++) {                                                                  
                                 strncpy(word,message[k],strlen(message[k])-1);
-                                if(strcmp(gtk_entry_get_text(GTK_ENTRY(SName)),word)==0){                            //compara the entred data with all users in file
+                                if(strcmp(gtk_entry_get_text(GTK_ENTRY(Email)),word)==0){                            //compara the entred data with all users in file
                                     test=true;
                                     }
                             }
@@ -213,13 +202,11 @@
                             else{
                                 fclose(fp);                                                                         //else close file and open it as write privilege
                                 fp=fopen("src/Data.txt","ab"); 
-                                g_print("Accounnt created");
-                                fputs(gtk_entry_get_text(GTK_ENTRY(SName)),fp);
+                                fputs(gtk_entry_get_text(GTK_ENTRY(Email)),fp);
                                 fputs("\n",fp);
-                                fputs(gtk_entry_get_text(GTK_ENTRY(SPin)),fp);
+                                fputs(gtk_entry_get_text(GTK_ENTRY(Password)),fp);
                                 fputs("\n",fp);
                                 gtk_widget_show(AccountCreated);
-                                g_print("Accounnt created");
                                 }
                             fclose(fp);                                                                             //close it again
                         }
@@ -237,6 +224,7 @@
             builder         = gtk_builder_new_from_file("glade/window_main.glade");
             AccountError    = GTK_WIDGET(gtk_builder_get_object(builder,"AccountError"));                          ///////////////////////////////////////////
             AccountEmpty    = GTK_WIDGET(gtk_builder_get_object(builder,"AccountEmpty"));
+            Profile         = GTK_WIDGET(gtk_builder_get_object(builder,"Profile"));
             Wrongpassword   = GTK_WIDGET(gtk_builder_get_object(builder,"Wrongpassword"));
             NoAccount       = GTK_WIDGET(gtk_builder_get_object(builder,"NoAccount"));
             notepad         = GTK_WIDGET(gtk_builder_get_object(builder,"Notepad"));
@@ -265,11 +253,11 @@
             g_signal_connect(G_OBJECT(CLOSEE),"clicked", G_CALLBACK (Hide), (gpointer)AccountEmpty);                            //link with functions
 
             
-            if(strcmp(gtk_entry_get_text(GTK_ENTRY(Name)),"\0")==0 || strcmp(gtk_entry_get_text(GTK_ENTRY(Pin)),"\0")==0){      //if name or pin arent filled condition
+            if(strcmp(gtk_entry_get_text(GTK_ENTRY(LEmail)),"\0")==0 || strcmp(gtk_entry_get_text(GTK_ENTRY(LPassword)),"\0")==0){      //if name or pin arent filled condition
                 gtk_widget_show(AccountEmpty);
             }
             
-            if(strcmp(gtk_entry_get_text(GTK_ENTRY(Name)),"\0")!=0 && strcmp(gtk_entry_get_text(GTK_ENTRY(Pin)),"\0")!=0 ){     //if both of them are filled condition
+            if(strcmp(gtk_entry_get_text(GTK_ENTRY(LEmail)),"\0")!=0 && strcmp(gtk_entry_get_text(GTK_ENTRY(LPassword)),"\0")!=0 ){     //if both of them are filled condition
             
                 fp=fopen("src/Data.txt","r");                                                                                   //open a file and only read         
                     while(fgets(buffer,80,fp)){                                                                                 //while there is a line enter to the loop
@@ -293,17 +281,16 @@
                         strncpy(word,message[k],strlen(message[k])-1);                                                          //this is used to delete the '\n' because when you get data from a file \n is the symbol of an end of line in buffer
                         strncpy(word1,messagepass[k],strlen(messagepass[k])-1);                                                 //this is used to delete the '\n' because when you get data from a file \n is the symbol of an end of line in buffer
                             
-                            if(strcmp(gtk_entry_get_text(GTK_ENTRY(Name)),word)==0 && strcmp(gtk_entry_get_text(GTK_ENTRY(Pin)),word1)!=0){
+                            if(strcmp(gtk_entry_get_text(GTK_ENTRY(LEmail)),word)==0 && strcmp(gtk_entry_get_text(GTK_ENTRY(LPassword)),word1)!=0){
                                 gtk_widget_show(Wrongpassword);
                             }
-                            if(strcmp(gtk_entry_get_text(GTK_ENTRY(Name)),word)!=0){
+                            if(strcmp(gtk_entry_get_text(GTK_ENTRY(LEmail)),word)!=0){
                                 gtk_widget_show(NoAccount);
                             }
                             
-                            if(strcmp(gtk_entry_get_text(GTK_ENTRY(Name)),word)==0 && strcmp(gtk_entry_get_text(GTK_ENTRY(Pin)),word1)==0) {    //if data corresponds to info in the file
-                                gtk_window_set_title(GTK_WINDOW(notepad),gtk_entry_get_text(GTK_ENTRY(Name)));                                  //open notepad and name it the name of a user
-                                gtk_widget_hide(AccountEmpty);
-                                gtk_widget_show(notepad);
+                            if(strcmp(gtk_entry_get_text(GTK_ENTRY(LEmail)),word)==0 && strcmp(gtk_entry_get_text(GTK_ENTRY(LPassword)),word1)==0) {    //if data corresponds to info in the file
+                                  gtk_window_set_title(GTK_WINDOW(Profile),"Welcome");
+                                  gtk_widget_show(Profile);
                             }
                     }
             }
@@ -316,7 +303,7 @@
 
         void popup_exit(){
             builder  = gtk_builder_new_from_file("glade/window_main.glade");                                         ////////////////////////////////
-            Exit = GTK_WIDGET(gtk_builder_get_object(builder,"EXITPOPUP"));
+            Exit     = GTK_WIDGET(gtk_builder_get_object(builder,"EXITPOPUP"));
             YES      = GTK_WIDGET(gtk_builder_get_object(builder,"YES"));
             NO       = GTK_WIDGET(gtk_builder_get_object(builder,"NO"));
                                                                                                                    

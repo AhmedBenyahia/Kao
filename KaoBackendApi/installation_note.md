@@ -18,6 +18,9 @@ python3 manage.py migrate && \
 python manage.py createsuperuser && \
 python3 manage.py runserver && \
 
+# import script python from any directory in this project 
+# i'm create file script.py exist in recognition_test so run this commande 
+export PYTHONPATH=$PYTHONPATH:your_directory/Kao/recognition-test
 
 
 
@@ -33,8 +36,10 @@ python3 manage.py runserver && \
 # APIs URLs
 URL REGISTRATION ACCOUNT (http://127.0.0.1:8000/api/accounts/register);
 URL LOGIN WITH TOKEN AUTHENTICATION (http://127.0.0.1:8000/api/accounts/login);
+URL LOGIN WITH FACE RECOGNITION (http://127.0.0.1:8000/api/accounts/face-login)
 URL LOGOUT WITH DELETE AUTH TOKEN (http://127.0.0.1:8000/api/accounts/logout);
 URL GET AUTH USER (http://127.0.0.1:8000/api/accounts/auth);
+URL UPLOAD FILES (http://127.0.0.1:8000/api/accounts/upload);
 URL ALL MEMOS OF AUTH USER (http://127.0.0.1:8000/api/memos/all);
 URL GET SPECIAL MEMO (http://127.0.0.1:8000/api/memos/{dynamique_id});
 URL UPDATE SPECIAL MEMO (http://127.0.0.1:8000/api/memos/{dynamique_id}/update);
