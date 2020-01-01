@@ -1,18 +1,22 @@
 
 # Create new python environment
-## In The project root dir
+## (normal installation) In The project root dir run:
 sudo apt-get update && \
 sudo apt-get install -y python-virtualenv && \
 mkdir env && virtualenv -p /usr/bin/python3 env/djangoApi && \
 source env/djangoApi/bin/activate && \
 pip3 install -r requirements.txt
 
-#Run the server 
+
+## (within the opencv docker container) In The project root dir run:
+mkvirtualenv django-2.2.9 && \
+pip3 install -r requirements.txt
+
+#Install migration and Run the server 
 python3 manage.py makemigrations && \  
 python3 manage.py migrate && \
 python manage.py createsuperuser && \
 python3 manage.py runserver && \
-
 
 
 
