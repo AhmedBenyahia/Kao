@@ -1,3 +1,4 @@
+from scripts.import_libs import *
 
 
 # function to get the images and label data
@@ -17,6 +18,8 @@ def getImagesAndLabels(path):
 
 
 def train_model():
+    import_opencv()
+
     print("############################################")
     print("######  Training model is starting... ######")
     print("############################################")
