@@ -11,7 +11,7 @@ def import_opencv():
     print("###################################")
     print("")
     import os
-    
+
     for path in ['/root/.virtualenvs/OpenCV-3.4.4-py3/bin', '/root/.virtualenvs/OpenCV-3.4.4-py3/lib/python35.zip',
                  '/root/.virtualenvs/OpenCV-3.4.4-py3/lib/python3.5',
                  '/root/.virtualenvs/OpenCV-3.4.4-py3/lib/python3.5/plat-x86_64-linux-gnu',

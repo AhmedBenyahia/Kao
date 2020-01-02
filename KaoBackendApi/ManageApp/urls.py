@@ -27,5 +27,4 @@ urlpatterns = [
 ]
 
 hello()
-test_env_1()
-test_env_2()
+import_opencv()
