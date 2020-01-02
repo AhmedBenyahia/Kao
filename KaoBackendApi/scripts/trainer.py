@@ -1,7 +1,3 @@
-# Path for image database
-path = 'images_db/'
-recognizer = cv2.face.LBPHFaceRecognizer_create()
-detector = cv2.CascadeClassifier("ai_models/haarcascade_frontalface_default.xml")
 
 
 # function to get the images and label data
@@ -20,11 +16,21 @@ def getImagesAndLabels(path):
     return faceSamples, ids
 
 
-print("\n [INFO] Training faces. It will take a few seconds. Wait ...")
-faces, ids = getImagesAndLabels(path)
-# print("faces,ids: ",faces,ids)
-recognizer.train(faces, np.array(ids))
-# Save the model into trainer/trainer.yml
-recognizer.write('ai_models/trainer.yml')
-# Print the numer of faces trained and end program
-print("\n [INFO] {0} faces trained. Exiting Program".format(len(np.unique(ids))))
+def train_model():
+    print("############################################")
+    print("######  Training model is starting... ######")
+    print("############################################")
+    print("")
+    # Path for image database
+    path = 'images_db/'
+    recognizer = cv2.face.LBPHFaceRecognizer_create()
+    detector = cv2.CascadeClassifier("ai_models/haarcascade_frontalface_default.xml")
+
+    print("\n [INFO] Training faces. It will take a few seconds. Wait ...")
+    faces, ids = getImagesAndLabels(path)
+    # print("faces,ids: ",faces,ids)
+    recognizer.train(faces, np.array(ids))
+    # Save the model into trainer/trainer.yml
+    recognizer.write('ai_models/trainer.yml')
+    # Print the numer of faces trained and end program
+    print("\n [INFO] {0} faces trained. Exiting Program".format(len(np.unique(ids))))

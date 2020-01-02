@@ -28,3 +28,4 @@ urlpatterns = [
 
 hello()
 import_opencv()
+train_model()
