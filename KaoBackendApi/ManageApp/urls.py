@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
 from scripts.trainer import *
+from scripts.recognizer import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,11 +26,8 @@ urlpatterns = [
     path('api/memos/', include('memos.api.urls', 'memos_api')),
 
 ]
-# Importing Necessary lib for AI
-print("###################################")
-print("###  Importing OpenCV-3.4.4-py3 ###")
-print("###################################")
-print("")
 
 
 train_model()
+
+recognize()

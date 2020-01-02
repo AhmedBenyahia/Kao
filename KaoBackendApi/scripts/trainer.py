@@ -1,5 +1,10 @@
-
 def train_model():
+
+    print("###################################")
+    print("###  Importing OpenCV-3.4.4-py3 ###")
+    print("###################################")
+    print("")
+
     import os
     for path in ['/root/.virtualenvs/OpenCV-3.4.4-py3/bin', '/root/.virtualenvs/OpenCV-3.4.4-py3/lib/python35.zip',
                  '/root/.virtualenvs/OpenCV-3.4.4-py3/lib/python3.5',
@@ -11,7 +16,6 @@ def train_model():
                  '/root/.ipython']:
         os.sys.path.append(path)
     import cv2
-    import sys
     import numpy as np
     from PIL import Image
 
@@ -30,8 +34,6 @@ def train_model():
                 ids.append(id)
         return faceSamples, ids
 
-    # Print the current working directory
-    print(os.getcwd())
     print("############################################")
     print("######  Training model is starting... ######")
     print("############################################")
@@ -43,9 +45,9 @@ def train_model():
 
     print("\n [INFO] Training faces. It will take a few seconds. Wait ...")
     faces, ids = getImagesAndLabels(path)
-    # print("faces,ids: ",faces,ids)
+    print("ids: ", np.unique(ids))
     recognizer.train(faces, np.array(ids))
     # Save the model into trainer/trainer.yml
     recognizer.write('ai_models/trainer.yml')
     # Print the numer of faces trained and end program
-    print("\n [INFO] {0} faces trained. Exiting Program".format(len(np.unique(ids))))
+    print("\n [INFO] {0} faces trained. Exiting trainer".format(len(np.unique(ids))))
