@@ -1,4 +1,6 @@
+
 def train_model():
+    import os
     for path in ['/root/.virtualenvs/OpenCV-3.4.4-py3/bin', '/root/.virtualenvs/OpenCV-3.4.4-py3/lib/python35.zip',
                  '/root/.virtualenvs/OpenCV-3.4.4-py3/lib/python3.5',
                  '/root/.virtualenvs/OpenCV-3.4.4-py3/lib/python3.5/plat-x86_64-linux-gnu',
@@ -12,7 +14,6 @@ def train_model():
     import sys
     import numpy as np
     from PIL import Image
-    import os
 
     # function to get the images and label data
     def getImagesAndLabels(path):
