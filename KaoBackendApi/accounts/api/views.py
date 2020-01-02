@@ -14,7 +14,7 @@ from accounts.models import Account
 import base64
 from random import random
 #import script from recognition_test so make this
-from script import your_id
+# from script import your_id
 
 # login user and return auth token with user data
 class CustomObtainAuthToken(ObtainAuthToken):

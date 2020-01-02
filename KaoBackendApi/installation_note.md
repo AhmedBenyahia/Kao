@@ -18,8 +18,8 @@ python3 manage.py migrate && \
 python manage.py createsuperuser && \
 python3 manage.py runserver && \
 
-# import script python from any directory in this project 
-# i'm create file script.py exist in recognition_test so run this commande 
+# To import a new script from any directory in this project 
+# i'm create file script.py exist in recognition_test so run this command 
 export PYTHONPATH=$PYTHONPATH:your_directory/Kao/recognition-test
 
 
