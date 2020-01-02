@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import include
-from scripts.test_lib import *
+from scripts.import_libs import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,5 +27,5 @@ urlpatterns = [
 ]
 
 hello()
-test_env_2()
 test_env_1()
+test_env_2()

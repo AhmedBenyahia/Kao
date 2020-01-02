@@ -58,3 +58,7 @@ env/
 *.iml
 
 KaoBackendApi/.idea/
+
+KaoBackendApi/
+
+GTK/Login-Plateforme
