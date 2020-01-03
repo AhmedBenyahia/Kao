@@ -20,6 +20,8 @@
     GtkWidget *can,*okey ;
     GtkWidget *YES,*NO;                                                                                     //Exit POPUP            
     GtkWidget *Okay,*Cancel;                                                                                //Wrong password Pop-up
+    GtkLabel *FNameLabel,*LNameLabel,*EmailLabel,*PasswordLabel;
+    GtkWidget *Changer,*RNPassword,*NPassword,*Acient;
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //////////////////////////////////////////////////////////////////Windows///////////////////////////////////////////////////////////////////
@@ -27,7 +29,7 @@
     GtkWidget  *LoginWindow,*Sign,*Warning,*SamePin;                                                        //The windows Used
     GtkWidget  *AccountCreated,*AccountError,*AccountEmpty,*UserUsed,*Profile;                                       //The windows Used
     GtkWidget  *LengthError,*Exit,*notepad;                                                                 //The windows Used
-    GtkWidget  *Wrongpassword,*NoAccount;                                                                              //The windows Used
+    GtkWidget  *Wrongpassword,*NoAccount,*LogOut;                                                                              //The windows Used
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     ////////////////////////////////////////////////////////////Variables////////////////////////////////////////////////////////////////////////
@@ -38,6 +40,7 @@
     char message[100][20];                                                                                  //all the users table
     char messagepass[100][20];                                                                              //all the passwords
     struct stat st;                                                                                         //struct of a file we used it to see whether a file is empty    
+    int counterpasswordpopup=0,counternopasswordpopup=0,counterprofilepopup=0;
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     ///////////////////////////////////////////////////////// THE FUNCTIONS USED //////////////////////////////////////////////////////
@@ -47,6 +50,7 @@
     void verifydataLog();                                               //function of verifies Log conditions
     int main(int argc, char *argv[]);                                   //main()
     void Hide (GtkWidget *widget,gpointer window);                      //hide function
+    void ChangePw(char* variable);
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
                     /***************************************************************************************
@@ -85,7 +89,6 @@
                                 ***************************************************************************************/  
 
         int main(int argc, char *argv[]){
-    
             gtk_init(&argc, &argv);
 
             builder = gtk_builder_new_from_file("glade/window_main.glade");
@@ -114,7 +117,9 @@
     }
     /********************************************************************************************************************************************************/
         
-
+        void openfile(){
+            system("cd src && ./script.sh && ./Notepad ");
+        }
 
                             /********************************************************************************************
                             *                                                                                           *
@@ -175,9 +180,10 @@
                         fputs(gtk_entry_get_text(GTK_ENTRY(Password)),fp);
                         fputs("\n",fp);
                         gtk_widget_show(AccountCreated);
-                        fclose(fp);                                                                                 //filled with data and closed    
+                        goto label;                                                                            //filled with data and closed    
                     }
                     else{
+                        fclose(fp); 
                         fp=fopen("src/Data.txt","r");                                                               //if its not empty read it 
                         while(fgets(buffer,80,fp)){
                             if (i%2!=0)
@@ -206,6 +212,7 @@
                                 fputs("\n",fp);
                                 fputs(gtk_entry_get_text(GTK_ENTRY(Password)),fp);
                                 fputs("\n",fp);
+                      label:    mkdir(gtk_entry_get_text(GTK_ENTRY(FName)), 0777);
                                 gtk_widget_show(AccountCreated);
                                 }
                             fclose(fp);                                                                             //close it again
@@ -238,13 +245,26 @@
             Okay            = GTK_WIDGET(gtk_builder_get_object(builder,"Okay")); 
             Yes             = GTK_WIDGET(gtk_builder_get_object(builder,"YES"));
             No              = GTK_WIDGET(gtk_builder_get_object(builder,"NO"));                                    /////////////////////////////////////////////
+            LNameLabel      = GTK_LABEL(gtk_builder_get_object(builder,"LNameLabel"));
+            FNameLabel      = GTK_LABEL(gtk_builder_get_object(builder,"FNameLabel"));
+            EmailLabel      = GTK_LABEL(gtk_builder_get_object(builder,"EmailLabel"));
+            PasswordLabel   = GTK_LABEL(gtk_builder_get_object(builder,"PasswordLabel"));
+            Changer         = GTK_WIDGET(gtk_builder_get_object(builder,"Changer"));
+            LogOut          = GTK_WIDGET(gtk_builder_get_object(builder,"LogOut"));
             int i=0,j=0,p=0;
 
             g_signal_connect(G_OBJECT(Cancel),"clicked", G_CALLBACK (Hide), (gpointer)Wrongpassword);                           //link with functions
             g_signal_connect(G_OBJECT(Okay),"clicked", G_CALLBACK (Hide), (gpointer)Wrongpassword);                             //link with functions
 
-            g_signal_connect(G_OBJECT(can),"clicked", G_CALLBACK (Hide), (gpointer)NoAccount);                           //link with functions
-            g_signal_connect(G_OBJECT(okey),"clicked", G_CALLBACK (Hide), (gpointer)NoAccount);                             //link with functions
+            g_signal_connect(G_OBJECT(LogOut),"clicked", G_CALLBACK (Hide), (gpointer)Profile);                                //link with functions
+            g_signal_connect(G_OBJECT(LogOut),"released", G_CALLBACK (main), (gpointer)Profile);
+
+             g_signal_connect(G_OBJECT(Changer),"released", G_CALLBACK (openfile), (gpointer)Profile);
+
+             
+
+            g_signal_connect(G_OBJECT(can),"clicked", G_CALLBACK (Hide), (gpointer)NoAccount);                                  //link with functions
+            g_signal_connect(G_OBJECT(okey),"clicked", G_CALLBACK (Hide), (gpointer)NoAccount);                                 //link with functions
 
             g_signal_connect(G_OBJECT(ok),"clicked", G_CALLBACK (Hide), (gpointer)AccountError);                                //link with functions
             g_signal_connect(G_OBJECT(fermer),"clicked", G_CALLBACK (Hide), (gpointer)AccountError);                            //link with functions
@@ -281,17 +301,35 @@
                         strncpy(word,message[k],strlen(message[k])-1);                                                          //this is used to delete the '\n' because when you get data from a file \n is the symbol of an end of line in buffer
                         strncpy(word1,messagepass[k],strlen(messagepass[k])-1);                                                 //this is used to delete the '\n' because when you get data from a file \n is the symbol of an end of line in buffer
                             
+                            if(strcmp(gtk_entry_get_text(GTK_ENTRY(LEmail)),word)==0 && strcmp(gtk_entry_get_text(GTK_ENTRY(LPassword)),word1)==0) {    //if data corresponds to info in the file
+                                  gtk_widget_hide(LoginWindow);
+                                  gtk_window_set_title(GTK_WINDOW(Profile),"Welcome");
+                                  //gtk_label_set_text(FNameLabel,gtk_entry_get_text(GTK_ENTRY(LEmail)));
+                                  //gtk_label_set_text(LNameLabel,gtk_entry_get_text(GTK_ENTRY(LEmail)));
+                                  gtk_label_set_text(EmailLabel,gtk_entry_get_text(GTK_ENTRY(LEmail)));
+                                  gtk_label_set_text(PasswordLabel,gtk_entry_get_text(GTK_ENTRY(LPassword)));  
+                                  k=j;
+                                  counterprofilepopup++;
+                            }
+                           
                             if(strcmp(gtk_entry_get_text(GTK_ENTRY(LEmail)),word)==0 && strcmp(gtk_entry_get_text(GTK_ENTRY(LPassword)),word1)!=0){
-                                gtk_widget_show(Wrongpassword);
+                                counterpasswordpopup++;
                             }
                             if(strcmp(gtk_entry_get_text(GTK_ENTRY(LEmail)),word)!=0){
-                                gtk_widget_show(NoAccount);
+                                counternopasswordpopup++;
                             }
-                            
-                            if(strcmp(gtk_entry_get_text(GTK_ENTRY(LEmail)),word)==0 && strcmp(gtk_entry_get_text(GTK_ENTRY(LPassword)),word1)==0) {    //if data corresponds to info in the file
-                                  gtk_window_set_title(GTK_WINDOW(Profile),"Welcome");
-                                  gtk_widget_show(Profile);
-                            }
+                    }
+                    if(counterprofilepopup==1){
+                        gtk_widget_show(Profile);
+                        counterprofilepopup=0;
+                    }
+                    if(counterpasswordpopup==1){
+                        gtk_widget_show(Wrongpassword);
+                        counterpasswordpopup=0;
+                    }
+                    if(counternopasswordpopup==j){
+                        gtk_widget_show(NoAccount);
+                        counternopasswordpopup=0;
                     }
             }
 
