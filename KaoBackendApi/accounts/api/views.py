@@ -39,10 +39,10 @@ def api_get_user_view(request):
     img_path = 'images_db/tmp/' + str(int(random() * 100000000000)) + '.jpg'
     with open(img_path, 'wb') as f:
         f.write(img_data)
-    recognize(img_path)
-    if id:
+    id_num = recognize(img_path)
+    if id_num:
         try:
-            user = Account.objects.get(id=id)
+            user = Account.objects.get(id=id_num)
         except Account.DoesNotExist:
             user = None
         if user:

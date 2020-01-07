@@ -89,3 +89,4 @@ def recognize(img_path):
     # Do a bit of cleanup
     print("\n [INFO] Result: id:" + id_num + " confidence: " + confidence)
     print("\n [INFO] Recognizing Ends")
+    return id_num
