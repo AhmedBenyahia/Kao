@@ -39,7 +39,7 @@ def train_model():
     print("############################################")
     print("")
     # Path for image database
-    path = 'images_db/'
+    path = 'images_db/user_img/'
     recognizer = cv2.face.LBPHFaceRecognizer_create()
     detector = cv2.CascadeClassifier("ai_models/haarcascade_frontalface_default.xml")
 

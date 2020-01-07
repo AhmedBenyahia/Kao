@@ -104,7 +104,7 @@ def api_upload_image_file(request):
     for img in string_images:
         imgdata = base64.b64decode(img)
         # random=string.ascii_lowercase
-        filename = 'images_db/' + str(user.id) + '_' + str(int(random() * 100000000000)) + '.jpg'
+        filename = 'images_db/user_img' + str(user.id) + '_' + str(int(random() * 100000000000)) + '.jpg'
         with open(filename, 'wb') as f:
             f.write(imgdata)
     train_model()
