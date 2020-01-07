@@ -26,7 +26,7 @@
 
     //////////////////////////////////////////////////////////////////Windows///////////////////////////////////////////////////////////////////
     GtkBuilder *builder;                                                                                    //the glade varialble
-    GtkWidget  *LoginWindow,*Sign,*Warning,*SamePin;                                                        //The windows Used
+    GtkWidget  *LoginWindow,*Sign,*Warning,*SamePin,*Photo;                                                        //The windows Used
     GtkWidget  *AccountCreated,*AccountError,*AccountEmpty,*UserUsed,*Profile;                                       //The windows Used
     GtkWidget  *LengthError,*Exit,*notepad;                                                                 //The windows Used
     GtkWidget  *Wrongpassword,*NoAccount,*LogOut;                                                                              //The windows Used
@@ -71,7 +71,7 @@
             Email           = GTK_WIDGET(gtk_builder_get_object(builder,"Email"));
             Creation        = GTK_WIDGET(gtk_builder_get_object(builder,"Creation"));                                     //link the glade buttons with c 
             Return          = GTK_WIDGET(gtk_builder_get_object(builder,"Return"));                                       //link the glade buttons with c 
-    
+
                        
             g_signal_connect(G_OBJECT(Creation),"clicked", G_CALLBACK (verifydataSign), (gpointer)LoginWindow);      //link the button with a function ;
             g_signal_connect(G_OBJECT(Return),"clicked", G_CALLBACK (Hide), (gpointer)Sign);                         //link the button with a function ;    
@@ -87,7 +87,6 @@
                                 *                                   Main Login window                                  *
                                 *                                                                                      *   
                                 ***************************************************************************************/  
-
         int main(int argc, char *argv[]){
             gtk_init(&argc, &argv);
 
@@ -135,7 +134,7 @@
             UserUsed = GTK_WIDGET(gtk_builder_get_object(builder, "UserUsed"));
             int i=0,j=0;
             
-                       
+            Photo   = GTK_WIDGET(gtk_builder_get_object(builder, "Image-enter"));          
             OK      = GTK_WIDGET(gtk_builder_get_object(builder, "OK"));
             CLOSE   = GTK_WIDGET(gtk_builder_get_object(builder, "CLOSE"));
                                                                                                         
@@ -160,6 +159,7 @@
 
             g_signal_connect(G_OBJECT(CLOSEUSED),"clicked", G_CALLBACK (Hide),(gpointer) UserUsed);
             g_signal_connect(G_OBJECT(OKUSED),"clicked", G_CALLBACK (Hide), (gpointer)UserUsed);
+
 
 
             if(strcmp(gtk_entry_get_text(GTK_ENTRY(FName)),"\0")==0 || (strcmp(gtk_entry_get_text(GTK_ENTRY(LName)),"\0")==0) || (strcmp(gtk_entry_get_text(GTK_ENTRY(Email)),"\0")==0) || (strcmp(gtk_entry_get_text(GTK_ENTRY(Password)),"\0")==0)|| (strcmp(gtk_entry_get_text(GTK_ENTRY(RPassword)),"\0")==0) )  //if the formilar isnt fully filled condition 
