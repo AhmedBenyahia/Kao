@@ -87,6 +87,6 @@ def recognize(img_path):
     cv2.imwrite('/images_db/processed_img/' + str(id_num) + '_' + '.png', image)
 
     # Do a bit of cleanup
-    print("\n [INFO] Result: id:" + id_num + " confidence: " + confidence)
+    print("\n [INFO] Result: id:" + str(id_num) + " confidence: " + confidence)
     print("\n [INFO] Recognizing Ends")
     return id_num

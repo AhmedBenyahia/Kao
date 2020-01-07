@@ -94,7 +94,7 @@ def api_get_auth_user_view(request):
     return Response(serializer.data)
 
 
-# upload image
+# upload images and re-train the model
 @api_view(['POST', ])
 @permission_classes((IsAuthenticated,))
 def api_upload_image_file(request):
@@ -107,5 +107,27 @@ def api_upload_image_file(request):
         filename = 'images_db/user_img/' + str(user.id) + '_' + str(int(random() * 100000000000)) + '.jpg'
         with open(filename, 'wb') as f:
             f.write(imgdata)
+    train_model()
+    return Response(status=status.HTTP_200_OK)
+
+
+# upload image without re-training the model
+@api_view(['POST', ])
+@permission_classes((IsAuthenticated,))
+def api_upload_image_without_retrain_model(request):
+    user = request.user
+    data = request.data
+    string_image = data['image']
+    img_data = base64.b64decode(string_image)
+    filename = 'images_db/user_img/' + str(user.id) + '_' + str(int(random() * 100000000000)) + '.jpg'
+    with open(filename, 'wb') as f:
+        f.write(img_data)
+    return Response(status=status.HTTP_200_OK)
+
+
+# upload image without re-training the model
+@api_view(['POST', ])
+@permission_classes((IsAuthenticated,))
+def api_train_model(request):
     train_model()
     return Response(status=status.HTTP_200_OK)
