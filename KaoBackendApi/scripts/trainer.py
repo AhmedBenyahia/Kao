@@ -45,7 +45,8 @@ def train_model():
 
     print("\n [INFO] Training faces. It will take a few seconds. Wait ...")
     faces, ids = getImagesAndLabels(path)
-    print("ids: ", np.unique(ids))
+    print("\n [INFO] Training End.")
+    print("\n [INFO] Detected Ids: ", np.unique(ids))
     recognizer.train(faces, np.array(ids))
     # Save the model into trainer/trainer.yml
     recognizer.write('ai_models/trainer.yml')

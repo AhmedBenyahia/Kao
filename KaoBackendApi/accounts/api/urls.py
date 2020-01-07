@@ -6,7 +6,7 @@ from accounts.api.views import (
     Logout,
     api_upload_image_file,
     api_get_user_view,
-    api_upload_image_without_retrain_model)
+    api_upload_image_without_retrain_model, api_train_model)
 
 app_name="accounts"
 
@@ -17,7 +17,7 @@ urlpatterns = [
       path('logout', Logout.as_view(), name="logout"),
       path('upload-and-train', api_upload_image_file, name="upload-and-train"),
       path('upload-image', api_upload_image_without_retrain_model, name="upload-image"),
-      path('train-model', api_upload_image_file, name="train-model"),
+      path('train-model', api_train_model, name="train-model"),
       path('face-login', api_get_user_view, name="face-login"),
 
 
