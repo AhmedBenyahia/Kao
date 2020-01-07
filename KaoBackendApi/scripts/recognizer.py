@@ -1,6 +1,6 @@
 
 
-def recognize():
+def recognize(img_path):
 
     print("###################################")
     print("###  Importing OpenCV-3.4.4-py3 ###")
@@ -38,7 +38,7 @@ def recognize():
     font = cv2.FONT_HERSHEY_SIMPLEX
 
     # Read the image
-    image = cv2.imread("images_db/test_subject/Ahmed_01.png")
+    image = cv2.imread(img_path)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
     faces = faceCascade.detectMultiScale(
@@ -78,8 +78,8 @@ def recognize():
             1
         )
 
-    cv2.imwrite('/images_db/processed_img' + str(id_num) + '_' + '.png', image)
+    cv2.imwrite('/images_db/processed_img/' + str(id_num) + '_' + '.png', image)
 
     # Do a bit of cleanup
-    print("\n [INFO] Result: " + confidence)
+    print("\n [INFO] Result: id:" + id_num + " confidence: " + confidence)
     print("\n [INFO] Recognizing Ends")
