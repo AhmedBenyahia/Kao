@@ -31,6 +31,7 @@ def recognize(img_path):
     # init confidante
     confidence = 0
 
+    print("Load Model")
     recognizer = cv2.face.LBPHFaceRecognizer_create()
     recognizer.read('ai_models/trainer.yml')
     cascadePath = "ai_models/haarcascade_frontalface_default.xml"
@@ -38,15 +39,19 @@ def recognize(img_path):
     font = cv2.FONT_HERSHEY_SIMPLEX
 
     # Read the image
+    print("Load Face the image")
     image = cv2.imread(img_path)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
+    print("Detect Faces")
     faces = faceCascade.detectMultiScale(
         gray,
         scaleFactor=1.2,
         minNeighbors=5,
         minSize=(30, int(30)),
     )
+    print(str(len(faces)) + "Faces are detected")
+    print("Processing...")
     for (x, y, w, h) in faces:
         cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
         id_num, confidence = recognizer.predict(gray[y:y + h, x:x + w])
@@ -78,6 +83,7 @@ def recognize(img_path):
             1
         )
 
+    print("save processed image")
     cv2.imwrite('/images_db/processed_img/' + str(id_num) + '_' + '.png', image)
 
     # Do a bit of cleanup
