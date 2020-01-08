@@ -39,13 +39,14 @@ def train_model():
     print("############################################")
     print("")
     # Path for image database
-    path = 'images_db/'
+    path = 'images_db/user_img/'
     recognizer = cv2.face.LBPHFaceRecognizer_create()
     detector = cv2.CascadeClassifier("ai_models/haarcascade_frontalface_default.xml")
 
     print("\n [INFO] Training faces. It will take a few seconds. Wait ...")
     faces, ids = getImagesAndLabels(path)
-    print("ids: ", np.unique(ids))
+    print("\n [INFO] Training End.")
+    print("\n [INFO] Detected Ids: ", np.unique(ids))
     recognizer.train(faces, np.array(ids))
     # Save the model into trainer/trainer.yml
     recognizer.write('ai_models/trainer.yml')

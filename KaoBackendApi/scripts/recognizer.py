@@ -1,6 +1,6 @@
 
 
-def recognize():
+def recognize(img_path):
 
     print("###################################")
     print("###  Importing OpenCV-3.4.4-py3 ###")
@@ -31,6 +31,7 @@ def recognize():
     # init confidante
     confidence = 0
 
+    print("\n [INFO] Load Model")
     recognizer = cv2.face.LBPHFaceRecognizer_create()
     recognizer.read('ai_models/trainer.yml')
     cascadePath = "ai_models/haarcascade_frontalface_default.xml"
@@ -38,15 +39,19 @@ def recognize():
     font = cv2.FONT_HERSHEY_SIMPLEX
 
     # Read the image
-    image = cv2.imread("images_db/test_subject/Ahmed_01.png")
+    print("\n [INFO] Load Face the image")
+    image = cv2.imread(img_path)
     gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 
+    print("\n [INFO] Detect Faces")
     faces = faceCascade.detectMultiScale(
         gray,
         scaleFactor=1.2,
         minNeighbors=5,
         minSize=(30, int(30)),
     )
+    print("\n [INFO] " + str(len(faces)) + " Faces detected")
+    print("\n [INFO] Processing...")
     for (x, y, w, h) in faces:
         cv2.rectangle(image, (x, y), (x + w, y + h), (0, 255, 0), 2)
         id_num, confidence = recognizer.predict(gray[y:y + h, x:x + w])
@@ -78,8 +83,10 @@ def recognize():
             1
         )
 
-    cv2.imwrite('/images_db/processed_img' + str(id_num) + '_' + '.png', image)
+    print("\n [INFO] save processed image")
+    cv2.imwrite('/images_db/processed_img/' + str(id_num) + '_' + '.png', image)
 
     # Do a bit of cleanup
-    print("\n [INFO] Result: " + confidence)
+    print("\n [INFO] Result: id:" + str(id_num) + " confidence: " + confidence)
     print("\n [INFO] Recognizing Ends")
+    return id_num

@@ -60,3 +60,6 @@ env/
 KaoBackendApi/.idea/
 
 GTK/Login-Plateforme
+
+*.png
+*.jpg
