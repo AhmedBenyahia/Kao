@@ -38,7 +38,7 @@ GtkWidget *Wrongpassword, *NoAccount, *LogOut;                                  
 bool test = false;                                                                                        //bool variable
 char word[20], word1[4];                                                                                 //username and pass variable
 FILE *fp;                                                                                               //Declaration of a File
-char buffer[80], x[20];                                                                                  //buffr
+char buffer2[80], x[20];                                                                                  //buffr
 char message[100][20];                                                                                  //all the users table
 char messagepass[100][20];                                                                              //all the passwords
 struct stat st;                                                                                         //struct of a file we used it to see whether a file is empty
@@ -223,13 +223,12 @@ void verifydataSign() {
             } else {
                 fclose(fp);
                 fp = fopen("src/Data.txt","r");                                                               //if its not empty read it
-                while (fgets(buffer, 80, fp)) {
+                while (fgets(buffer2, 80, fp)) {
                     if (i % 2 != 0) {
                         i++;
                         continue;
                     }
-                    strcpy(message[j],
-                           buffer);                                                               //fill table message with user
+                    strcpy(message[j],buffer2);                                                               //fill table message with user
                     i++;
                     j++;
                 }
@@ -291,7 +290,7 @@ void verifydataLog() {
     Changer = GTK_WIDGET(gtk_builder_get_object(builder, "Changer"));
     LogOut = GTK_WIDGET(gtk_builder_get_object(builder, "LogOut"));
     Upload = GTK_WIDGET(gtk_builder_get_object(builder, "Upload"));
-    int i = 0, j = 0, p = 0;
+    int i = 0;
 
 
     g_signal_connect(G_OBJECT(Cancel), "clicked", G_CALLBACK(Hide),(gpointer) Wrongpassword);                           //link with functions
@@ -313,7 +312,6 @@ void verifydataLog() {
     g_signal_connect(G_OBJECT(OKK), "clicked", G_CALLBACK(Hide),(gpointer) AccountEmpty);                               //link with functions
     g_signal_connect(G_OBJECT(CLOSEE), "clicked", G_CALLBACK(Hide),(gpointer) AccountEmpty);                            //link with functions
 
-
     printf("[INFO] email -%s-\n", gtk_entry_get_text(GTK_ENTRY(LEmail)));
     printf("[INFO] password -%s-\n", gtk_entry_get_text(GTK_ENTRY(LPassword)));
 
@@ -328,45 +326,42 @@ void verifydataLog() {
             system(buffer);
             system("bash ./src/script5.sh ");
         } else {
-            gtk_widget_show(AccountEmpty);
+            counternopasswordpopup = 1;
         }
     }
 
     if (strcmp(gtk_entry_get_text(GTK_ENTRY(LEmail)), "\0") != 0 &&
-        strcmp(gtk_entry_get_text(GTK_ENTRY(LPassword)), "\0") != 0) {     //if both of them are filled condition
+        strcmp(gtk_entry_get_text(GTK_ENTRY(LPassword)), "\0") != 0) {     
 
         char buffer[1024];
         snprintf(buffer, sizeof(buffer), "bash ./src/script4.sh %s %s", gtk_entry_get_text(GTK_ENTRY(LEmail)), gtk_entry_get_text(GTK_ENTRY(LPassword)));
         system(buffer);
     }
-
-    // File empty or null
-    if (0) {
+    fp = fopen("src/Data.txt", "r");                                                              
+        if (stat("src/Data.txt", &st) == 0) {
+            if ((st.st_size) =!  0)     {   
+                i=0;
+                while (fgets(buffer2, 80, fp) && i<4) {
+                        strcpy(message[i],buffer2); 
+                        strncpy(message[i],message[i], strlen(message[i]) - 1);
+                        g_print("%s",message[i]); 
+                        i++;
+                        }
+                        
+                        gtk_label_set_text(FNameLabel,message[1]);
+                        g_print("%s", message[0]);
+                        gtk_label_set_text(LNameLabel,message[2]);
+                        gtk_label_set_text(EmailLabel,message[3]);
+                
+                        counterprofilepopup = 1;
+        }
+    else{
         counternopasswordpopup = 1;
-    } else {
-        // Read from Data file
-        // Also parse file to display profile info
-//        fp = fopen("src/Data.txt","r");                                                                                   //open a file and only read
-//        while (fgets(buffer, 80, fp)) {                                                                                 //while there is a line enter to the loop
-//            if (i % 2 == 0) {
-//                strcpy(message[j],
-//                       buffer);                                                                          //table message is being filled with names
-//                j++;
-//                i++;
-//                continue;
-//            }
-//            if (i % 2 != 0) {
-//                strcpy(messagepass[p],
-//                       buffer);                                                                      //table messagepass is being filled with password
-//                p++;
-//                i++;
-//                continue;
-//            }
-//        }
-//        fclose(fp);
-        counterprofilepopup = 1;
     }
+    }
+    fclose(fp);
     if (counterprofilepopup == 1) {
+        g_print("I AM HERE");
         gtk_widget_show(Profile);
         counterprofilepopup = 0;
     }
@@ -374,10 +369,11 @@ void verifydataLog() {
         gtk_widget_show(Wrongpassword);
         counterpasswordpopup = 0;
     }
-    if (counternopasswordpopup == 1) {
+    if (counternopasswordpopup >= 1) {
         gtk_widget_show(NoAccount);
         counternopasswordpopup = 0;
     }
+
 }
 
 //////////////////////////////////////////////////////////////////////////////////////
