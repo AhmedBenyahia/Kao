@@ -26,7 +26,7 @@
 
     //////////////////////////////////////////////////////////////////Windows///////////////////////////////////////////////////////////////////
     GtkBuilder *builder;                                                                                    //the glade varialble
-    GtkWidget  *LoginWindow,*Sign,*Warning,*SamePin,*Photo;                                                        //The windows Used
+    GtkWidget  *LoginWindow,*Sign,*Warning,*SamePin,*Photo,*SignImgs,*LoginImg;                                                        //The windows Used
     GtkWidget  *AccountCreated,*AccountError,*AccountEmpty,*UserUsed,*Profile;                                       //The windows Used
     GtkWidget  *LengthError,*Exit,*notepad;                                                                 //The windows Used
     GtkWidget  *Wrongpassword,*NoAccount,*LogOut;                                                                              //The windows Used
@@ -51,6 +51,9 @@
     int main(int argc, char *argv[]);                                   //main()
     void Hide (GtkWidget *widget,gpointer window);                      //hide function
     void ChangePw(char* variable);
+    void openmultiple();
+    void opendialog();
+    void openfile();
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
                     /***************************************************************************************
@@ -70,9 +73,11 @@
             RPassword       = GTK_WIDGET(gtk_builder_get_object(builder,"RPassword"));                                        //link the glade buttons with c 
             Email           = GTK_WIDGET(gtk_builder_get_object(builder,"Email"));
             Creation        = GTK_WIDGET(gtk_builder_get_object(builder,"Creation"));                                     //link the glade buttons with c 
-            Return          = GTK_WIDGET(gtk_builder_get_object(builder,"Return"));                                       //link the glade buttons with c 
+            Return          = GTK_WIDGET(gtk_builder_get_object(builder,"Return")); 
+            SignImgs        = GTK_WIDGET(gtk_builder_get_object(builder, "SignImgs"));                                      //link the glade buttons with c 
 
                        
+            g_signal_connect(G_OBJECT(SignImgs),"clicked", G_CALLBACK (openmultiple),(gpointer) Signupwindow);
             g_signal_connect(G_OBJECT(Creation),"clicked", G_CALLBACK (verifydataSign), (gpointer)LoginWindow);      //link the button with a function ;
             g_signal_connect(G_OBJECT(Return),"clicked", G_CALLBACK (Hide), (gpointer)Sign);                         //link the button with a function ;    
             g_signal_connect(G_OBJECT(Return),"released", G_CALLBACK (main), (gpointer)LoginWindow);                 //link the button with a function ;
@@ -100,8 +105,10 @@
             LPassword       = GTK_WIDGET(gtk_builder_get_object(builder,"LPassword"));
             Connect         = GTK_WIDGET(gtk_builder_get_object(builder,"Connect"));
             Signup          = GTK_WIDGET(gtk_builder_get_object(builder,"Signupbtn"));
-            Exit            = GTK_WIDGET(gtk_builder_get_object(builder,"Exit"));                                       //link all buttons of the login 
+            Exit            = GTK_WIDGET(gtk_builder_get_object(builder,"Exit"));
+            LoginImg        = GTK_WIDGET(gtk_builder_get_object(builder, "LoginImg"));                                       //link all buttons of the login 
 
+            g_signal_connect(G_OBJECT(LoginImg),"clicked", G_CALLBACK (opendialog), (gpointer)LoginWindow);
             g_signal_connect(G_OBJECT(Connect),"clicked", G_CALLBACK (verifydataLog), (gpointer)LoginWindow);
             g_signal_connect(G_OBJECT(Signup),"clicked", G_CALLBACK (Signupwindow), (gpointer)LoginWindow);
             g_signal_connect(G_OBJECT(Signup),"released", G_CALLBACK (Hide), (gpointer)LoginWindow);
@@ -116,10 +123,6 @@
     }
     /********************************************************************************************************************************************************/
         
-        void openfile(){
-            system("cd src && ./script.sh && ./Notepad ");
-        }
-
                             /********************************************************************************************
                             *                                                                                           *
                             *                              VERIFY SIGNUP CONDITIONS                                     *
@@ -127,29 +130,33 @@
                             *********************************************************************************************/
 
         void verifydataSign(){
-            builder = gtk_builder_new_from_file("glade/window_main.glade");                                 ///////////////////////////////////////////
-            Warning = GTK_WIDGET(gtk_builder_get_object(builder, "Warning"));                                               
-            SamePin = GTK_WIDGET(gtk_builder_get_object(builder, "SamePinError"));
-            AccountCreated = GTK_WIDGET(gtk_builder_get_object(builder, "AccountCreated"));
-            UserUsed = GTK_WIDGET(gtk_builder_get_object(builder, "UserUsed"));
+            builder         = gtk_builder_new_from_file("glade/window_main.glade");                                 ///////////////////////////////////////////
+            Warning         = GTK_WIDGET(gtk_builder_get_object(builder, "Warning"));                                               
+            SamePin         = GTK_WIDGET(gtk_builder_get_object(builder, "SamePinError"));
+            AccountCreated  = GTK_WIDGET(gtk_builder_get_object(builder, "AccountCreated"));
+            UserUsed        = GTK_WIDGET(gtk_builder_get_object(builder, "UserUsed"));
+            
             int i=0,j=0;
             
-            Photo   = GTK_WIDGET(gtk_builder_get_object(builder, "Image-enter"));          
-            OK      = GTK_WIDGET(gtk_builder_get_object(builder, "OK"));
-            CLOSE   = GTK_WIDGET(gtk_builder_get_object(builder, "CLOSE"));
+    
+                     
+            OK          = GTK_WIDGET(gtk_builder_get_object(builder, "OK"));
+            CLOSE       = GTK_WIDGET(gtk_builder_get_object(builder, "CLOSE"));
                                                                                                         
-            OKKK      = GTK_WIDGET(gtk_builder_get_object(builder, "OKKK"));
-            CLOSEEE   = GTK_WIDGET(gtk_builder_get_object(builder, "CLOSEEE"));
+            OKKK        = GTK_WIDGET(gtk_builder_get_object(builder, "OKKK"));
+            CLOSEEE     = GTK_WIDGET(gtk_builder_get_object(builder, "CLOSEEE"));
 
-            OKUSED    = GTK_WIDGET(gtk_builder_get_object(builder,"OKUSED"));
-            CLOSEUSED = GTK_WIDGET(gtk_builder_get_object(builder,"CLOSEUSED")); 
+            OKUSED      = GTK_WIDGET(gtk_builder_get_object(builder,"OKUSED"));
+            CLOSEUSED   = GTK_WIDGET(gtk_builder_get_object(builder,"CLOSEUSED")); 
 
-            PINOK     = GTK_WIDGET(gtk_builder_get_object(builder, "PINOK"));
-            PINCLOSE   = GTK_WIDGET(gtk_builder_get_object(builder, "PINCLOSE"));
+            PINOK       = GTK_WIDGET(gtk_builder_get_object(builder, "PINOK"));
+            PINCLOSE    = GTK_WIDGET(gtk_builder_get_object(builder, "PINCLOSE"));
                                                                                                          
 
             g_signal_connect(G_OBJECT(OK),"clicked", G_CALLBACK (Hide),(gpointer) Warning);
             g_signal_connect(G_OBJECT(CLOSE),"clicked", G_CALLBACK (Hide), (gpointer)Warning);
+
+            
 
             g_signal_connect(G_OBJECT(PINOK),"clicked", G_CALLBACK (Hide),(gpointer) SamePin);
             g_signal_connect(G_OBJECT(PINCLOSE),"clicked", G_CALLBACK (Hide), (gpointer)SamePin);           ////////////////LINK FONCTIONS ///////////////
@@ -159,8 +166,6 @@
 
             g_signal_connect(G_OBJECT(CLOSEUSED),"clicked", G_CALLBACK (Hide),(gpointer) UserUsed);
             g_signal_connect(G_OBJECT(OKUSED),"clicked", G_CALLBACK (Hide), (gpointer)UserUsed);
-
-
 
             if(strcmp(gtk_entry_get_text(GTK_ENTRY(FName)),"\0")==0 || (strcmp(gtk_entry_get_text(GTK_ENTRY(LName)),"\0")==0) || (strcmp(gtk_entry_get_text(GTK_ENTRY(Email)),"\0")==0) || (strcmp(gtk_entry_get_text(GTK_ENTRY(Password)),"\0")==0)|| (strcmp(gtk_entry_get_text(GTK_ENTRY(RPassword)),"\0")==0) )  //if the formilar isnt fully filled condition 
                 gtk_widget_show(Warning); 
@@ -250,8 +255,10 @@
             EmailLabel      = GTK_LABEL(gtk_builder_get_object(builder,"EmailLabel"));
             PasswordLabel   = GTK_LABEL(gtk_builder_get_object(builder,"PasswordLabel"));
             Changer         = GTK_WIDGET(gtk_builder_get_object(builder,"Changer"));
-            LogOut          = GTK_WIDGET(gtk_builder_get_object(builder,"LogOut"));
+            LogOut          = GTK_WIDGET(gtk_builder_get_object(builder,"LogOut")); 
             int i=0,j=0,p=0;
+
+            
 
             g_signal_connect(G_OBJECT(Cancel),"clicked", G_CALLBACK (Hide), (gpointer)Wrongpassword);                           //link with functions
             g_signal_connect(G_OBJECT(Okay),"clicked", G_CALLBACK (Hide), (gpointer)Wrongpassword);                             //link with functions
@@ -259,10 +266,9 @@
             g_signal_connect(G_OBJECT(LogOut),"clicked", G_CALLBACK (Hide), (gpointer)Profile);                                //link with functions
             g_signal_connect(G_OBJECT(LogOut),"released", G_CALLBACK (main), (gpointer)Profile);
 
-             g_signal_connect(G_OBJECT(Changer),"released", G_CALLBACK (openfile), (gpointer)Profile);
+            g_signal_connect(G_OBJECT(Changer),"released", G_CALLBACK (openfile), (gpointer)Profile);
 
-             
-
+            g_signal_connect(G_OBJECT(LogOut),"clicked", G_CALLBACK (Hide), (gpointer)Profile);
             g_signal_connect(G_OBJECT(can),"clicked", G_CALLBACK (Hide), (gpointer)NoAccount);                                  //link with functions
             g_signal_connect(G_OBJECT(okey),"clicked", G_CALLBACK (Hide), (gpointer)NoAccount);                                 //link with functions
 
@@ -271,6 +277,7 @@
 
             g_signal_connect(G_OBJECT(OKK),"clicked", G_CALLBACK (Hide), (gpointer)AccountEmpty);                               //link with functions
             g_signal_connect(G_OBJECT(CLOSEE),"clicked", G_CALLBACK (Hide), (gpointer)AccountEmpty);                            //link with functions
+
 
             
             if(strcmp(gtk_entry_get_text(GTK_ENTRY(LEmail)),"\0")==0 || strcmp(gtk_entry_get_text(GTK_ENTRY(LPassword)),"\0")==0){      //if name or pin arent filled condition
@@ -352,4 +359,15 @@
         }
          void Hide(GtkWidget *widget,gpointer window){
             gtk_widget_hide(window);                                                                                        //hide a window
+        }
+        void openfile(){
+            system("cd src && ./script.sh && ./Notepad && cd ..");
+        }
+
+        void openmultiple(){
+        system("cd src && ./script2.sh && ./multi && cd ..");
+        }
+
+        void opendialog(){
+            system("cd src && ./script1.sh && ./dialog && cd ..");
         }
