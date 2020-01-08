@@ -6,7 +6,7 @@
 #include <netinet/in.h> /* struct sockaddr_in, struct sockaddr */
 #include <netdb.h> /* struct hostent, gethostbyname */
 
-//./soc 40.122.110.117 5000 POST "/api/accounts/login" "{ \"username\": \"slaysayto@gmail.com\", \"password\": \"Sl@ysAYTO\" }" "Content-Type: application/json"
+//./soc 40.122.110.117 5000 POST "/api/accounts/login" "{ \"username\": \"slaysayto@gmail.com\", \"password\": \"" }" "Content-Type: application/json"
 
 void error(const char *msg) { perror(msg); exit(0); }
 
@@ -87,7 +87,7 @@ int main(int argc,char *argv[])
     }
 
     /* What are we going to send? */
-    printf("Request:\n%s\n",message);
+//    printf("Request:\n%s\n",message);
 
     /* create the socket */
     sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -139,7 +139,18 @@ int main(int argc,char *argv[])
     close(sockfd);
 
     /* process response */
-    printf("Response:\n%s\n",response);
+    char *content = strstr(response, "\r\n\r\n");
+    if (content != NULL) {
+        content += 4; // Offset by 4 bytes to start of content
+    }
+    else {
+        content = response; // Didn't find end of header, write out everything
+    }
+//    printf(content);
+
+    FILE* fp = fopen("test.json","w");
+    fputs(content, fp);
+    fclose(fp);
 
     free(message);
     return 0;
