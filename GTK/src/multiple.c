@@ -6,10 +6,9 @@
 #include<unistd.h>
 
 
-    gchar *filename; 
-    GtkFileChooser *dialogue;
-     GtkWidget *dialog;
-     GSList  *file;
+gchar *filename; 
+GtkWidget *dialog;
+GSList  *file;
     
 int main(int argc, char *argv[]) {
     gint id;
@@ -21,9 +20,8 @@ int main(int argc, char *argv[]) {
       id = gtk_dialog_run(GTK_DIALOG(dialog));
       if(GTK_RESPONSE_ACCEPT == id){    
           if(gtk_file_chooser_get_select_multiple (GTK_FILE_CHOOSER(dialog)));
-               file = gtk_file_chooser_get_files (GTK_FILE_CHOOSER(dialog));
+               file = gtk_file_chooser_get_files (GTK_FILE_CHOOSER(dialog));   
+               
       }
-
-
 }
-//gtk_font_selection_dialog_new("Choose A Font");
+
